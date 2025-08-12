@@ -53,11 +53,6 @@
   </style>
 </head>
 <body>
-  
-  </nav><button id="navAdmin">Admin</button>>
-    <a href="index.html">Home</a> |
-    <a href="about.html">About Us</a>
-</nav>
   <header>
     <div class="wrap top">
       <div class="logo">PP</div>
@@ -134,7 +129,7 @@
       <div style="margin-top:14px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)">
         <strong>Bank:</strong> <span style="color:var(--text)">Example Bank</span><br>
         <strong>Account name:</strong> <span style="color:var(--text)">PredictPro Services</span><br>
-        <strong>Account number:</strong> <span style="color:var(--text)">0123457447</span><br>
+        <strong>Account number:</strong> <span style="color:var(--text)">093837333</span><br>
         <strong>Amount (NGN):</strong> <span id="vipAmount">10,000</span>
       </div>
 
@@ -321,7 +316,6 @@
 
     function download(filename, text){ const a = document.createElement('a'); a.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(text); a.download = filename; a.click(); }
 
-    <a href="about.html">About Us<a>
     // User management
     $('saveUser').addEventListener('click', ()=>{ const name = $('userName').value.trim(); const phone = $('userPhone').value.trim(); if(!name){ alert('Enter name'); return; } const id = uid(); users[id] = {id,name,phone,vip:false}; currentUserId = id; localStorage.setItem('ps_current_user', currentUserId); save('users'); renderUser(); renderPredictions(); alert('User saved'); });
     $('logoutUser').addEventListener('click', ()=>{ if(confirm('Clear current user?')){ currentUserId = null; localStorage.removeItem('ps_current_user'); renderUser(); renderPredictions(); } });
@@ -331,9 +325,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
