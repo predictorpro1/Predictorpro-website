@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predictions - PredictorPro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>PredictorPro</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="predictions.html">Predictions</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Latest Predictions</h2>
+
+    <div class="post">
+        <h3>Match 1: Team A vs Team B</h3>
+        <p>Prediction: Team A to win.</p>
+        <img src="sample1.jpg" alt="Match prediction image">
+    </div>
+
+    <div class="post">
+        <h3>Match 2: Team C vs Team D</h3>
+        <p>Prediction: Draw.</p>
+        <img src="sample2.jpg" alt="Match prediction image">
+    </div>
+
+</main>
+
+<footer>
+    <p>&copy; 2025 PredictorPro. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
