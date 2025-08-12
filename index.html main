@@ -128,10 +128,10 @@
       <div class="muted">Follow the steps to pay by bank transfer. After payment, submit proof here. Admin will verify and grant VIP access to your account.</div>
 
       <div style="margin-top:14px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)">
-        <strong>Bank:</strong> <span style="color:var(--text)">Example Bank</span><br>
-        <strong>Account name:</strong> <span style="color:var(--text)">PredictPro Services</span><br>
-        <strong>Account number:</strong> <span style="color:var(--text)">093837333</span><br>
-        <strong>Amount (NGN):</strong> <span id="vipAmount">10000</span>
+        <strong>Bank:</strong> <span style="color:var(--text)">Monipiont</span><br>
+        <strong>Account name:</strong> <span style="color:var(--text)">Jesreal Lago yohanna</span><br>
+        <strong>Account number:</strong> <span style="color:var(--text)">8140103359</span><br>
+        <strong>Amount (NGN):</strong> <span id="vipAmount">10,000</span>
       </div>
 
       <div class="card" style="margin-top:12px">
@@ -399,3 +399,4 @@
   </script>
 </body>
 </html>
+
