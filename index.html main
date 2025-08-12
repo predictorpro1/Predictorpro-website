@@ -213,7 +213,7 @@
     // ----- initial data -----
     let users = load('ps_users', {});
     let predictions = load('ps_predictions', [
-      {id:'p1',title:'Liverpool vs Arsenal',text:'2 - 1',type:'free'},
+      {id:'p1',title:'Liverpool vs Barcelona',text:'2 - 1',type:'free'},
       {id:'p2',title:'Real Madrid vs Barca',text:'1 - 2',type:'vip'}
     ]);
     let payments = load('ps_payments', []);
@@ -399,4 +399,5 @@
   </script>
 </body>
 </html>
+
 
