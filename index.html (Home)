@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PredictorPro - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>PredictorPro</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="predictions.html">Predictions</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Welcome to PredictorPro</h2>
+    <p>Your trusted platform for accurate sports predictions. Explore our latest tips and boost your winning chances.</p>
+</main>
+
+<footer>
+    <p>&copy; 2025 PredictorPro. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
