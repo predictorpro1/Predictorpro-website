@@ -128,10 +128,10 @@
       <div class="muted">Follow the steps to pay by bank transfer. After payment, submit proof here. Admin will verify and grant VIP access to your account.</div>
 
       <div style="margin-top:14px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)">
-        <strong>Bank:</strong> <span style="color:var(--text)">Monipiont</span><br>
-        <strong>Account name:</strong> <span style="color:var(--text)">Jesreal Lago yohanna</span><br>
-        <strong>Account number:</strong> <span style="color:var(--text)">8140103359</span><br>
-        <strong>Amount (NGN):</strong> <span id="vipAmount">10,000</span>
+        <strong>Bank:</strong> <span style="color:var(--text)">Example Bank</span><br>
+        <strong>Account name:</strong> <span style="color:var(--text)">PredictPro Services</span><br>
+        <strong>Account number:</strong> <span style="color:var(--text)">093837333</span><br>
+        <strong>Amount (NGN):</strong> <span id="vipAmount">10000</span>
       </div>
 
       <div class="card" style="margin-top:12px">
@@ -213,7 +213,7 @@
     // ----- initial data -----
     let users = load('ps_users', {});
     let predictions = load('ps_predictions', [
-      {id:'p1',title:'Liverpool vs Barcelona',text:'2 - 1',type:'free'},
+      {id:'p1',title:'Liverpool vs Arsenal',text:'2 - 1',type:'free'},
       {id:'p2',title:'Real Madrid vs Barca',text:'1 - 2',type:'vip'}
     ]);
     let payments = load('ps_payments', []);
@@ -272,3 +272,130 @@
       table.innerHTML = `<thead><tr><th>Title</th><th>Text</th><th>Type</th><th>Action</th></tr></thead>`;
       const tb = document.createElement('tbody');
       predictions.forEach(p=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${p.title}</td><td>${p.text}</td><td>${p.type}</td>`;
+        const td = document.createElement('td');
+        const del = document.createElement('button'); del.className='btn ghost'; del.textContent='Delete'; del.addEventListener('click', ()=>{ if(confirm('Delete?')){ predictions = predictions.filter(x=>x.id!==p.id); saveLocal('ps_predictions', predictions); renderPredAdmin(); renderPredictions(); } });
+        td.appendChild(del); tr.appendChild(td); tb.appendChild(tr);
+      });
+      table.appendChild(tb); box.appendChild(table);
+    }
+
+    // ----- Save helper wrapper -----
+    function saveAll(){
+      saveLocal('ps_users', users);
+      saveLocal('ps_predictions', predictions);
+      saveLocal('ps_payments', payments);
+    }
+
+    // ----- Payments: AJAX submit with fallback -----
+    async function submitProofAjax(formElem){
+      const fd = new FormData(formElem);
+      // add current user phone if present
+      if(currentUserId && users[currentUserId] && !fd.get('payPhone')) fd.set('payPhone', users[currentUserId].phone || '');
+      try {
+        const res = await fetch('submit_proof.php', { method: 'POST', body: fd });
+        if(!res.ok) throw new Error('Server returned ' + res.status);
+        const text = await res.text();
+        // if server redirects or confirms, show success
+        $('submitMsg').textContent = 'Submitted to server. Admin will review.';
+        // optional: redirect or clear form
+        formElem.reset();
+        return true;
+      } catch (e) {
+        // fallback to localStorage (demo)
+        console.warn('AJAX submit failed — falling back to localStorage', e);
+        const file = $('payFile').files[0];
+        let base64 = null;
+        if(file){
+          base64 = await toBase64(file);
+        }
+        const data = {
+          id: 'pay' + Date.now(),
+          name: fd.get('payName') || '',
+          phone: fd.get('payPhone') || '',
+          amount: fd.get('payAmount') || '',
+          ref: fd.get('payRef') || '',
+          imageBase64: base64,
+          ts: Date.now(),
+          confirmed: false
+        };
+        payments.push(data);
+        saveLocal('ps_payments', payments);
+        $('submitMsg').textContent = 'Saved locally (demo). When you deploy the server, submissions will go to the backend.';
+        formElem.reset();
+        renderPaymentsAdmin();
+        return false;
+      }
+    }
+
+    $('submitProof').addEventListener('click', async ()=> {
+      const form = $('proofForm');
+      const name = $('payName').value.trim() || $('userName').value.trim();
+      const phone = $('payPhone').value.trim() || $('userPhone').value.trim();
+      const amount = Number($('payAmount').value) || Number($('vipAmount').textContent);
+      if(!name || !phone || !amount){ $('submitMsg').textContent = 'Please provide name, phone and amount.'; return; }
+      $('submitMsg').textContent = 'Submitting...';
+      await submitProofAjax(form);
+    });
+
+    function toBase64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(); r.readAsDataURL(file); }); }
+
+    // ----- Admin demo actions -----
+    $('adminLogin').addEventListener('click', ()=>{
+      const pass = $('adminPass').value;
+      // demo password check (client-side). Replace with server auth in production.
+      if(pass === 'admin123'){
+        $('adminLoginBox').style.display='none';
+        $('adminArea').style.display='block';
+        $('adminLogout').style.display='inline-block';
+        renderPaymentsAdmin(); renderPredAdmin();
+      } else alert('Wrong password (demo). Use server admin for production.');
+    });
+    $('adminLogout').addEventListener('click', ()=>{ $('adminLoginBox').style.display='block'; $('adminArea').style.display='none'; $('adminLogout').style.display='none'; });
+
+    $('addPred').addEventListener('click', ()=> {
+      const t = $('predTitle').value.trim(); const txt = $('predText').value.trim(); const type = $('predType').value;
+      if(!t||!txt){ alert('Please add title and text'); return; }
+      predictions.push({id:'p'+Date.now(),title:t,text:txt,type});
+      saveLocal('ps_predictions', predictions);
+      $('predTitle').value=''; $('predText').value='';
+      renderPredAdmin(); renderPredictions();
+    });
+
+    $('clearPredictions').addEventListener('click', ()=>{ if(confirm('Clear all predictions?')){ predictions=[]; saveLocal('ps_predictions', predictions); renderPredAdmin(); renderPredictions(); } });
+
+    function confirmPayment(id){
+      const p = payments.find(x=>x.id===id); if(!p) return;
+      p.confirmed = true;
+      saveLocal('ps_payments', payments);
+      // grant VIP to user if phone matches
+      let user = Object.values(users).find(u=>u.phone && u.phone===p.phone);
+      if(!user){
+        const newId = uid();
+        users[newId] = {id:newId,name:p.name,phone:p.phone,vip:true};
+        currentUserId = newId;
+        localStorage.setItem('ps_current_user', currentUserId);
+      } else {
+        user.vip = true;
+      }
+      saveAll();
+      renderUser();
+      alert('Payment confirmed and VIP granted (demo).');
+    }
+
+    $('exportPayments').addEventListener('click', ()=>{ const data = JSON.stringify(payments, null, 2); download('payments.json', data); });
+    $('downloadProofs').addEventListener('click', ()=>{ const data = JSON.stringify(payments, null, 2); download('payments.json', data); });
+    $('confirmAll').addEventListener('click', ()=>{ if(confirm('Confirm all payments?')){ payments.forEach(p=>p.confirmed=true); saveLocal('ps_payments', payments); payments.forEach(p=>{ let user = Object.values(users).find(u=>u.phone && u.phone===p.phone); if(!user){ const newId=uid(); users[newId]={id:newId,name:p.name,phone:p.phone,vip:true}; } else user.vip=true; }); saveAll(); renderPaymentsAdmin(); renderUser(); alert('All confirmed (demo)'); } });
+
+    function download(filename, text){ const a = document.createElement('a'); a.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(text); a.download = filename; a.click(); }
+
+    // ----- user management -----
+    $('saveUser').addEventListener('click', ()=>{ const name = $('userName').value.trim(); const phone = $('userPhone').value.trim(); if(!name){ alert('Enter name'); return; } const id = uid(); users[id] = {id,name,phone,vip:false}; currentUserId = id; localStorage.setItem('ps_current_user', currentUserId); saveLocal('ps_users', users); renderUser(); renderPredictions(); alert('User saved (demo).'); });
+    $('logoutUser').addEventListener('click', ()=>{ if(confirm('Clear current user?')){ currentUserId = null; localStorage.removeItem('ps_current_user'); renderUser(); renderPredictions(); } });
+
+    // ----- init -----
+    renderPredictions(); renderUser(); renderPredAdmin(); renderPaymentsAdmin();
+  </script>
+</body>
+</html>
