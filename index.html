@@ -269,10 +269,12 @@
     $('navVIP').addEventListener('click', ()=>show('vip'));
     $('navAdmin').addEventListener('click', ()=>show('admin'));
     $('goVIP').addEventListener('click', ()=>show('vip'));
+$('goAbout').addEventListener('click', ()=>show('about'));
     function show(page){
       $('pageHome').style.display = page==='home'? 'block' : 'none';
       $('pageVIP').style.display = page==='vip'? 'block' : 'none';
       $('pageAdmin').style.display = page==='admin'? 'block' : 'none';
+      $('pageAbout').style.display = page==='about'? 'block' : 'none';
     }
 
     // ----- storage helpers -----
@@ -468,3 +470,4 @@
   </script>
 </body>
 </html>
+
