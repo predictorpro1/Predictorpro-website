@@ -72,7 +72,7 @@
       <a href="#" id="navHome">Home</a>
       <a href="#" id="navVIP">VIP</a>
       <a href="#" id="navAdmin">Admin</a>
-      <a href="#" id="navAbout">about</a>
+      <a href="#" id="navAbout">About</a>
       <a href="admin-login.php" style="margin-left:auto" class="btn ghost">Server Admin Login</a>
     </nav>
 
@@ -187,6 +187,40 @@
     </section>
 
     <section id="pageVIP" class="card" style="display:none">
+      <h2>VIP Subscription — Bank Transfer</h2>
+      <div class="muted">Follow the steps to pay by bank transfer. After payment, submit proof here. Admin will verify and grant VIP access to your account.</div>
+
+      <div style="margin-top:14px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)">
+        <strong>Bank:</strong> <span style="color:var(--text)">Monipiont </span><br>
+        <strong>Account name:</strong> <span style="color:var(--text)">Jesreal Lago yohanna</span><br>
+        <strong>Account number:</strong> <span style="color:var(--text)">8140103359</span><br>
+        <strong>Amount (NGN):</strong> <span id="vipAmount">10000</span>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Submit payment proof</h3>
+        <!-- This form posts to submit_proof.php (server). JS will try AJAX; if endpoint not available it falls back to localStorage -->
+        <form id="proofForm" enctype="multipart/form-data" method="post" action="submit_proof.php" novalidate>
+          <label>Paid by (name)</label>
+          <input id="payName" name="payName" />
+          <label>Phone used for payment</label>
+          <input id="payPhone" name="payPhone" />
+          <label>Amount paid (NGN)</label>
+          <input id="payAmount" name="payAmount" type="number" value="10000" />
+          <label>Transaction/reference ID</label>
+          <input id="payRef" name="payRef" placeholder="e.g. 20250811ABC" />
+          <label>Upload screenshot (optional)</label>
+          <input id="payFile" name="payFile" type="file" accept="image/*" />
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button id="submitProof" type="button" class="btn">Submit proof</button>
+            <button id="downloadProofs" type="button" class="btn ghost">Export Submissions (Admin)</button>
+          </div>
+          <div id="submitMsg" class="muted" style="margin-top:10px"></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="pageAbout" class="card" style="display:none">
       <h2>VIP Subscription — Bank Transfer</h2>
       <div class="muted">Follow the steps to pay by bank transfer. After payment, submit proof here. Admin will verify and grant VIP access to your account.</div>
 
