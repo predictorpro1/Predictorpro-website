@@ -62,7 +62,7 @@
       </div>
       <div style="margin-left:auto;text-align:right">
         <div class="small">Contact: +23407084464197</div>
-        <div class="small">Message on WhatApp</div>
+        <div class="small">Email: admin@predictpro.com</div>
       </div>
     </div>
   </header>
@@ -70,6 +70,7 @@
   <main class="wrap">
     <nav>
       <a href="#" id="navHome">Home</a>
+      <a href="about.html">About Us</a>
       <a href="#" id="navVIP">VIP</a>
       <a href="#" id="navAdmin">Admin</a>
       <a href="admin-login.php" style="margin-left:auto" class="btn ghost">Server Admin Login</a>
@@ -78,8 +79,9 @@
     <section id="pageHome" class="card">
       <div class="grid">
         <div>
-          <h2>Upcoming Predictions</h2>
-          <div id="predictionsList" class="card" style="padding:12px"></div>
+          <h2 style =""
+
+            id="predictionsList" class="card" style="padding:12px"></div>
 
           <div class="card" style="margin-top:12px">
             <h3>Create or switch user</h3>
@@ -128,10 +130,10 @@
       <div class="muted">Follow the steps to pay by bank transfer. After payment, submit proof here. Admin will verify and grant VIP access to your account.</div>
 
       <div style="margin-top:14px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)">
-        <strong>Bank:</strong> <span style="color:var(--text)">Renmoney Microfinance Bank </span><br>
-        <strong>Account name:</strong> <span style="color:var(--text)">Michael Solomon</span><br>
-        <strong>Account number:</strong> <span style="color:var(--text)">3603077991</span><br>
-        <strong>Amount (NGN):</strong> <span id="vipAmount">10,000</span>
+        <strong>Bank:</strong> <span style="color:var(--text)">Example Bank</span><br>
+        <strong>Account name:</strong> <span style="color:var(--text)">PredictPro Services</span><br>
+        <strong>Account number:</strong> <span style="color:var(--text)">0938336333</span><br>
+        <strong>Amount (NGN):</strong> <span id="vipAmount">10000</span>
       </div>
 
       <div class="card" style="margin-top:12px">
@@ -213,7 +215,7 @@
     // ----- initial data -----
     let users = load('ps_users', {});
     let predictions = load('ps_predictions', [
-      {id:'p1',title:'Liverpool vs Arsenal',text:'2 - 1',type:'free'},
+      {id:'p1',title:'6ttrewwqq vs Manunited',text:'2 - 1',type:'free'},
       {id:'p2',title:'Real Madrid vs Barca',text:'1 - 2',type:'vip'}
     ]);
     let payments = load('ps_payments', []);
@@ -399,4 +401,3 @@
   </script>
 </body>
 </html>
-
