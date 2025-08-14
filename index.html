@@ -230,6 +230,7 @@
     let users = load('ps_users', {});
     let predictions = load('ps_predictions', [
       {id:'p1',title:'PSG vs Tottenham',text:'Ov 2.5',type:'free'},
+      {id:'p1',title:'Verdy vs Nagoya Grampus',text:'Ov 2.5',type:'free'},
       {id:'p2',title:'Barnsley vs Viking',text:'1 - 2',type:'vip'}
     ]);
     let payments = load('ps_payments', []);
@@ -338,7 +339,7 @@
         };
         payments.push(data);
         saveLocal('ps_payments', payments);
-        $('submitMsg').textContent = 'Saved locally (demo). When you deploy the server, submissions will go to the backend.';
+        $('submitMsg').textContent = 'Saved. submissions will go to the backend.';
         formElem.reset();
         renderPaymentsAdmin();
         return false;
